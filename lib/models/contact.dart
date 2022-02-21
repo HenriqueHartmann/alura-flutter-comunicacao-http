@@ -1,8 +1,8 @@
 class Contact {
   Contact(this.id, this.name, this.accountNumber);
 
-  final int id;
-  final String name;
+  final int? id;
+  final String? name;
   final int? accountNumber;
 
   Contact.fromJson(Map<String, dynamic> json) :

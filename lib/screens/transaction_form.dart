@@ -29,7 +29,7 @@ class _TransactionFormState extends State<TransactionForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                widget.contact.name,
+                widget.contact.name!,
                 style: TextStyle(
                   fontSize: 24.0,
                 ),

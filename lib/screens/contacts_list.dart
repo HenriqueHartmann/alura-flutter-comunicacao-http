@@ -94,7 +94,7 @@ class _ContactItem extends StatelessWidget {
       child: ListTile(
       onTap: () => onClick(),
       title: Text(
-        contact.name,
+        contact.name!,
         style: const TextStyle(fontSize: 24.0),
       ),
       subtitle: Text(contact.accountNumber.toString(),
