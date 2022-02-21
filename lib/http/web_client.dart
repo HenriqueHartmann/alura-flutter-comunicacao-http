@@ -7,7 +7,7 @@ final Client client = InterceptedClient.build(
     interceptors: [LoggingInterceptor()],
     requestTimeout: const Duration(seconds: 5));
 
-const String endpoint = 'http://172.16.82.18:8080';
+const String endpoint = 'http://172.16.82.7:8080';
 const String api = '/transactions';
 
 
