@@ -33,7 +33,7 @@ class TransactionWebClient {
   //    return transactions;
   // }
 
-  Future<Transaction> save(Transaction transaction) async {
+  Future<Transaction> save(Transaction transaction, String password) async {
     Map<String, dynamic> transactionMap = _toMap(transaction);
 
     final String transactionJson = jsonEncode(transactionMap);
@@ -41,7 +41,7 @@ class TransactionWebClient {
     final Response response = await client.post(Uri.parse(endpoint + api),
         headers: {
           'content-type': 'application/json',
-          'password': '1000',
+          'password': password,
         },
         body: transactionJson);
 
