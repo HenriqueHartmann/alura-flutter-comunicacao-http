@@ -16,8 +16,9 @@ class TransactionWebClient {
 
     final List<dynamic> decodedJson = jsonDecode(response.body);
 
-    return decodedJson.map((dynamic json) =>
-        Transaction.fromJson(json)).toList();
+    return decodedJson
+        .map((dynamic json) => Transaction.fromJson(json))
+        .toList();
   }
 
   // List<Transaction> _toTransactions(Response response) {
@@ -45,16 +46,22 @@ class TransactionWebClient {
         },
         body: transactionJson);
 
-    if (response.statusCode == 400) {
-      throw Exception('There was an error submitting transaction');
+    if (response.statusCode == 200) {
+      return Transaction.fromJson(jsonDecode(response.body));
     }
 
-    if (response.statusCode == 401) {
-      throw Exception('Authentication failed');
-    }
+    _throwHttpError(response.statusCode);
 
-    return Transaction.fromJson(jsonDecode(response.body));
+    throw Exception('');
   }
+
+  static final Map<int, String> _statusCodeResponses = {
+    400: 'There was an error submitting transaction',
+    401: 'Authentication failed'
+  };
+
+  void _throwHttpError(int statusCode) =>
+      throw Exception(_statusCodeResponses[statusCode]);
 
   Map<String, dynamic> _toMap(Transaction transaction) {
     final Map<String, dynamic> transactionMap = {
