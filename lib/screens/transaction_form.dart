@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bytebank/components/response_dialog.dart';
 import 'package:bytebank/components/transaction_auth_dialog.dart';
 import 'package:bytebank/http/webClients/transaction_webclient.dart';
@@ -94,9 +96,15 @@ class _TransactionFormState extends State<TransactionForm> {
       showDialog(
           context: context,
           builder: (contextDialog) {
-            return FailureDialog(e.message);
+            return const FailureDialog('Timeout Submitting the Transaction');
           });
-    }, test: (e) => e is Exception);
+    }, test: (e) => e is TimeoutException).catchError((e) {
+          showDialog(
+              context: context,
+              builder: (contextDialog) {
+                return FailureDialog(e.message);
+              });
+        }, test: (e) => e is HttpException);
 
     if (transaction != null) {
       await showDialog(

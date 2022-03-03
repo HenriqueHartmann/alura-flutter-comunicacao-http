@@ -7,8 +7,7 @@ import 'package:bytebank/http/web_client.dart';
 class TransactionWebClient {
   Future<List<Transaction>> findAll() async {
     final Response response = await client
-        .get(Uri.parse(endpoint + api))
-        .timeout(const Duration(seconds: 5));
+        .get(Uri.parse(endpoint + api));
 
     // List<Transaction> transactions = _toTransactions(response);
     //
@@ -50,9 +49,7 @@ class TransactionWebClient {
       return Transaction.fromJson(jsonDecode(response.body));
     }
 
-    _throwHttpError(response.statusCode);
-
-    throw Exception('');
+    throw HttpException(_statusCodeResponses[response.statusCode]!);
   }
 
   static final Map<int, String> _statusCodeResponses = {
@@ -74,4 +71,10 @@ class TransactionWebClient {
 
     return transactionMap;
   }
+}
+
+class HttpException implements Exception {
+  HttpException(this.message);
+
+  final String message;
 }
