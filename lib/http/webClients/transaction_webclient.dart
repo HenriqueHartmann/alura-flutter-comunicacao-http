@@ -38,6 +38,8 @@ class TransactionWebClient {
 
     final String transactionJson = jsonEncode(transactionMap);
 
+    await Future.delayed(const Duration(seconds: 10));
+
     final Response response = await client.post(Uri.parse(endpoint + api),
         headers: {
           'content-type': 'application/json',
